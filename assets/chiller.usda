@@ -1,0 +1,395 @@
+#usda 1.0
+(
+    doc = """An air-cooled chiller on the plant yard. 8 condenser fans on top,
+    finned coils down both long sides. Facility water connects on the -X end."""
+    defaultPrim = "Chiller"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "Chiller" (
+    kind = "component"
+)
+{
+    custom string facility:kind = "chiller"
+
+    def Scope "Looks"
+    {
+        def Material "Paint"
+        {
+            token outputs:surface.connect = </Chiller/Looks/Paint/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.2, 0.21, 0.22)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        # Aluminium fins in shadow
+        def Material "Coil"
+        {
+            token outputs:surface.connect = </Chiller/Looks/Coil/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.05, 0.055, 0.06)
+                float inputs:metallic = 0.6
+                float inputs:roughness = 0.6
+                token outputs:surface
+            }
+        }
+
+        def Material "FanGuard"
+        {
+            token outputs:surface.connect = </Chiller/Looks/FanGuard/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.012, 0.012, 0.014)
+                float inputs:metallic = 0.3
+                float inputs:roughness = 0.7
+                token outputs:surface
+            }
+        }
+
+        def Material "Steel"
+        {
+            token outputs:surface.connect = </Chiller/Looks/Steel/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.32, 0.33, 0.34)
+                float inputs:metallic = 0.9
+                float inputs:roughness = 0.32
+                token outputs:surface
+            }
+        }
+
+        def Material "Skid"
+        {
+            token outputs:surface.connect = </Chiller/Looks/Skid/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.06, 0.06, 0.065)
+                float inputs:metallic = 0.6
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        def Material "Screen"
+        {
+            token outputs:surface.connect = </Chiller/Looks/Screen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0)
+                color3f inputs:emissiveColor = (0.12, 0.55, 0.65)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        def Material "FacilityGreen"
+        {
+            token outputs:surface.connect = </Chiller/Looks/FacilityGreen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.03, 0.3, 0.1)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "FacilityGrey"
+        {
+            token outputs:surface.connect = </Chiller/Looks/FacilityGrey/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.3, 0.31, 0.32)
+                float inputs:metallic = 0.5
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "Skid" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Skid>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 0.1)
+        float3 xformOp:scale = (5.6, 2.5, 0.2)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        doc = "Tinted with live data in the twin"
+    )
+    {
+        rel material:binding = </Chiller/Looks/Paint>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 1.25)
+        float3 xformOp:scale = (5.5, 2.3, 2.1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "CoilL" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Coil>
+        double size = 1
+        double3 xformOp:translate = (0, -1.152, 1.3)
+        float3 xformOp:scale = (5, 0.006, 1.7)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "CoilR" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Coil>
+        double size = 1
+        double3 xformOp:translate = (0, 1.152, 1.3)
+        float3 xformOp:scale = (5, 0.006, 1.7)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "ControlPanel" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Paint>
+        double size = 1
+        double3 xformOp:translate = (-2.8, 0.5, 1.2)
+        float3 xformOp:scale = (0.1, 0.9, 1.4)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Screen" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Screen>
+        double size = 1
+        double3 xformOp:translate = (-2.852, 0.5, 1.5)
+        float3 xformOp:scale = (0.003, 0.3, 0.18)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+
+    # Condenser fans, 2 by 4.
+    def Cylinder "Fan1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (-2, -0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (-2, -0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan2" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (-0.67, -0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub2" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (-0.67, -0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan3" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (0.67, -0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub3" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (0.67, -0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan4" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (2, -0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub4" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (2, -0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan5" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (-2, 0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub5" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (-2, 0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan6" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (-0.67, 0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub6" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (-0.67, 0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan7" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (0.67, 0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub7" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (0.67, 0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Fan8" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FanGuard>
+        uniform token axis = "Z"
+        double height = 0.12
+        double radius = 0.5
+        double3 xformOp:translate = (2, 0.58, 2.36)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "Hub8" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.14
+        double radius = 0.1
+        double3 xformOp:translate = (2, 0.58, 2.37)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "FacilitySupplyStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FacilityGreen>
+        uniform token axis = "X"
+        double height = 0.2
+        double radius = 0.11
+        double3 xformOp:translate = (-2.85, -0.4, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "FacilityReturnStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Chiller/Looks/FacilityGrey>
+        uniform token axis = "X"
+        double height = 0.2
+        double radius = 0.11
+        double3 xformOp:translate = (-2.85, -0.8, 0.75)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}

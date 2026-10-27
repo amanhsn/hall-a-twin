@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hall A Twin</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: control-room console. Scenarios left, the hall in the middle, the teardown inspector right.
+   A single dark theme by choice: operators run these screens in dim rooms. */
+:root{
+  --bg:#0A0E0F; --panel:#111719; --panel-2:#172022; --line:#232E31; --ink:#E1E8EA; --muted:#88969B; --accent:#5BC3D8; --accent-ink:#06181D;
+  --ok:#6DBE8C; --warn:#E6AE4A; --throttled:#EF8350; --shutdown:#E5484D; --nopower:#4A5457; --maint:#A68BF5;
+  --src-live:#5BC3D8; --src-net:#F08DB8; --src-layout:#E6AE4A; --src-asset:#A68BF5;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --cond:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);overflow:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.label{font-family:var(--cond);font-weight:600;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+.app{display:grid;grid-template-rows:auto minmax(0,1fr);height:100%}
+header{display:flex;align-items:center;gap:28px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);min-width:0;overflow-x:auto}
+.brand{display:flex;flex-direction:column;line-height:1.2;flex:none}
+.brand b{font-family:var(--cond);font-size:17px;font-weight:600;letter-spacing:.01em}
+.brand span{font-size:12px;color:var(--muted)}
+.kpis{display:flex;gap:28px;flex:none}
+.kpi{display:flex;flex-direction:column;line-height:1.15}
+.kpi strong{font-family:var(--mono);font-size:19px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi strong small{font-size:12px;color:var(--muted);margin-left:3px}
+.kpi.bad strong{color:var(--shutdown)} .kpi.warn strong{color:var(--warn)}
+.muted-badge{margin-left:auto;flex:none;padding:4px 10px;border:1px solid var(--warn);color:var(--warn);font-size:12.5px}
+
+.main{display:grid;grid-template-columns:300px minmax(0,1fr) 420px;min-height:0}
+aside{background:var(--panel);overflow-y:auto;min-height:0}
+aside.left{border-right:1px solid var(--line)}
+aside.right{border-left:1px solid var(--line)}
+.sec{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.switch input{position:absolute;opacity:0}
+.switch .track{width:36px;height:20px;background:var(--line);position:relative;flex:none;transition:background .2s}
+.switch .track::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;background:var(--ink);transition:transform .2s}
+.switch input:checked+.track{background:var(--accent)}
+.switch input:checked+.track::after{transform:translateX(16px);background:var(--accent-ink)}
+.switch input:focus-visible+.track{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:12.5px;color:var(--muted)}
+
+.fail-list{display:flex;flex-direction:column;gap:6px}
+.fail{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px 10px;background:var(--panel-2);border:1px solid var(--line);cursor:pointer;text-align:left}
+.fail:hover{border-color:var(--muted)}
+.fail .what{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.fail .what span{font-size:12px;color:var(--muted)}
+.fail .state{font-family:var(--cond);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ok)}
+.fail.off{border-color:var(--shutdown)}
+.fail.off .state{color:var(--shutdown)}
+.btn{padding:7px 12px;background:var(--panel-2);border:1px solid var(--line);cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+.btn.danger{border-color:var(--shutdown);color:var(--shutdown)}
+.btn-row{display:flex;flex-wrap:wrap;gap:6px}
+
+.ticket{display:flex;flex-direction:column;gap:3px;padding:10px;background:var(--panel-2);border:1px solid var(--line)}
+.ticket .id{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.ticket b{font-weight:600;line-height:1.3}
+.verdict{padding:10px;border:1px solid var(--line);border-left:3px solid var(--ok);font-size:12.5px;display:flex;flex-direction:column;gap:4px}
+.verdict.bad{border-left-color:var(--shutdown)}
+.verdict b{font-weight:600}
+.verdict .delta{font-family:var(--mono);font-size:15px;font-variant-numeric:tabular-nums}
+.verdict .why{color:var(--muted)}
+.pushed{font-size:12.5px;color:var(--throttled)}
+
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{padding:5px 9px;background:var(--panel-2);border:1px solid var(--line);cursor:pointer;font-size:12.5px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.legend{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.legend .ramp{height:8px}
+.legend .ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px}
+.legend .keys{display:flex;flex-wrap:wrap;gap:6px 12px}
+.legend .keys i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px}
+
+.events{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.events li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px}
+.events time{font-family:var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.events .warn{color:var(--warn)} .events .alert{color:var(--throttled)}
+
+.stage{position:relative;min-width:0;min-height:0;overflow:hidden}
+#view{position:absolute;inset:0}
+#view canvas{display:block}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);padding:6px 9px;font-size:12.5px;white-space:nowrap;transform:translate(12px,12px)}
+.tip b{font-family:var(--mono);font-weight:500}
+.stage-hint{position:absolute;left:14px;right:14px;bottom:12px;font-size:12px;color:var(--muted);pointer-events:none;text-shadow:0 1px 2px var(--bg)}
+.stage-hint b{color:var(--ink);font-weight:500}
+.viewbar,.viewopts{position:absolute;top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.viewbar{left:12px}
+.viewopts{right:12px;padding:6px 10px;background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--line);gap:14px;font-size:12.5px}
+.viewbar .seg{gap:0;background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--line)}
+.viewbar .seg button{border:0;border-right:1px solid var(--line);background:none;padding:6px 11px;min-width:34px}
+.viewbar .seg button:last-child{border-right:0}
+.viewbar .seg button:hover:not(:disabled){background:var(--panel-2)}
+.viewbar .seg button:disabled{color:var(--muted);opacity:.5;cursor:default}
+.viewbar .seg button[aria-pressed="true"],.viewbar .seg button[aria-pressed="true"]:hover{background:var(--ink);color:var(--bg)}
+.viewopts .seg{align-items:center;gap:2px}
+.viewopts .seg .hint{margin-right:6px}
+.viewopts .seg button{padding:3px 8px;font-size:12px}
+.viewopts .switch{gap:8px}
+.stage{container-type:inline-size}
+.viewbar{z-index:2}
+.stage.fabric-on .viewbar .cam,.stage.fabric-on .viewopts,.stage.fabric-on .stage-hint{display:none}
+
+/* The fabric view: the same prims as the hall, drawn as the network sees them. */
+.fabric{position:absolute;inset:0;background:var(--bg);padding:60px 20px 14px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+.fabric[hidden]{display:none}
+.fabric-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 24px;flex-wrap:wrap}
+.fabric-head h3{margin:2px 0 0;font-family:var(--cond);font-size:20px;font-weight:600;line-height:1.15}
+.fabric-head p{margin:2px 0 0;font-size:12.5px;color:var(--muted);max-width:62ch}
+.fabric svg{width:100%;flex:1 1 auto;min-height:280px;display:block}
+.fabric svg text{font-family:var(--mono);font-size:12px;fill:var(--ink)}
+.fabric svg text.sub{fill:var(--muted);font-size:11px}
+.fabric svg text.row{font-family:var(--cond);font-weight:600;font-size:12px;letter-spacing:.08em;fill:var(--muted)}
+.fabric svg [data-path]{cursor:pointer}
+.fabric svg [data-path]:hover{filter:brightness(1.25)}
+@container (max-width:780px){.viewopts{top:54px;left:12px;right:auto}}
+
+.insp-head{padding:18px 18px 12px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--line)}
+.insp-head h2{margin:0;font-family:var(--cond);font-size:24px;font-weight:600;line-height:1.1}
+.insp-head .path{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-all}
+.insp-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.pill{font-family:var(--cond);font-weight:600;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;color:var(--bg)}
+.tabs{display:flex;border-bottom:1px solid var(--line);padding:0 10px}
+.tabs button{background:none;border:0;padding:10px 10px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;font-weight:500}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.pane{padding:16px 18px;display:flex;flex-direction:column;gap:16px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.metrics div{background:var(--panel-2);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.metrics strong{font-family:var(--mono);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
+.metrics strong small{font-size:12px;color:var(--muted);margin-left:2px}
+.spark{width:100%;height:84px;display:block;background:var(--panel-2);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:var(--mono);color:var(--muted);padding-right:8px;word-break:break-all}
+td.v{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+td.k{width:44%}
+td.s{text-align:right;padding-left:8px;width:1%}
+.src{font-family:var(--mono);font-size:10.5px;padding:1px 6px;border:1px solid;white-space:nowrap}
+.src.live{color:var(--src-live)} .src.net{color:var(--src-net)} .src.layout{color:var(--src-layout)} .src.asset{color:var(--src-asset)}
+.explain{font-size:13px;color:var(--muted)}
+.explain b{color:var(--ink);font-weight:500}
+pre{margin:0;padding:12px;background:var(--bg);border:1px solid var(--line);font:11.5px/1.55 var(--mono);overflow:auto;max-height:340px;color:var(--ink)}
+.layer-card{display:flex;flex-direction:column;gap:6px}
+.layer-card .cap{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.arcs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.arcs li{display:grid;grid-template-columns:24px 90px minmax(0,1fr);gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.arcs li .n{font-family:var(--mono);color:var(--muted)}
+.arcs li .t{font-family:var(--cond);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11.5px}
+.arcs li .l{font-family:var(--mono);word-break:break-all}
+.chain{display:flex;flex-direction:column;gap:0}
+.chain a{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:12.5px;cursor:pointer}
+.chain a:hover{border-color:var(--accent)}
+.chain .arrow{padding:2px 0 2px 14px;color:var(--muted);font-size:11.5px;font-family:var(--mono)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chips a{font-family:var(--mono);font-size:11.5px;padding:3px 7px;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer}
+.chips a:hover{border-color:var(--accent)}
+
+.intro{padding:20px 18px;display:flex;flex-direction:column;gap:18px}
+.intro h2{margin:0;font-family:var(--cond);font-size:22px;font-weight:600;line-height:1.15}
+.pipeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.pipeline li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.pipeline .n{font-family:var(--mono);color:var(--accent)}
+.pipeline b{display:block;font-family:var(--mono);font-weight:500;font-size:12.5px}
+.pipeline span{font-size:13px;color:var(--muted)}
+.try{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.try a{color:var(--accent);cursor:pointer}
+
+dialog{background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:0;width:min(760px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog .dh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+dialog pre{max-height:70vh;border:0}
+
+@media (max-width:1100px){
+  body{overflow:auto}
+  .app{height:auto}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .stage{height:60vh;order:-1}
+  aside.left,aside.right{border:0;border-top:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><b>Hall A twin</b><span>80 racks · 4 CDUs · 2 chillers · 10 switches · OpenUSD</span></div>
+    <div class="kpis">
+      <div class="kpi" id="k-it"><span class="label">IT load</span><strong>–</strong></div>
+      <div class="kpi" id="k-pue"><span class="label">PUE</span><strong>–</strong></div>
+      <div class="kpi" id="k-cdu"><span class="label">Hottest CDU supply</span><strong>–</strong></div>
+      <div class="kpi" id="k-risk"><span class="label">Racks at risk</span><strong>–</strong></div>
+      <div class="kpi" id="k-job"><span class="label">Training job</span><strong>–</strong></div>
+      <div class="kpi" id="k-clock"><span class="label">Sim time</span><strong>–</strong></div>
+    </div>
+    <div class="muted-badge" id="muted-badge" hidden></div>
+  </header>
+
+  <div class="main">
+    <aside class="left">
+      <div class="sec">
+        <div class="label">Workload</div>
+        <label class="switch"><span>Training surge<br><span class="hint">Push every GPU to ~97%</span></span>
+          <input type="checkbox" id="surge"><span class="track"></span></label>
+      </div>
+      <div class="sec">
+        <div class="label">Fail equipment</div>
+        <div class="fail-list" id="fail-list"></div>
+        <button class="btn" id="reset" type="button">Reset to normal</button>
+      </div>
+      <div class="sec">
+        <div class="label">Network change</div>
+        <span class="hint">What DSX Air is for: try a change on a simulated copy of the fabric before it reaches production.</span>
+        <div id="change" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+      <div class="sec">
+        <div class="label">Color by</div>
+        <div class="seg" id="modes" role="group" aria-label="Color by"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="sec">
+        <div class="label">USD layers</div>
+        <label class="switch"><span>Physics layer<br><span class="hint">live/telemetry.usda, written from sim.py</span></span>
+          <input type="checkbox" id="live-layer" checked><span class="track"></span></label>
+        <label class="switch"><span>Network layer<br><span class="hint">live/network.usda, written from fabric.py</span></span>
+          <input type="checkbox" id="net-layer" checked><span class="track"></span></label>
+        <div class="btn-row">
+          <button class="btn" data-layer="telemetry" type="button">Open telemetry.usda</button>
+          <button class="btn" data-layer="network" type="button">Open network.usda</button>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="label">Event log</div>
+        <ul class="events" id="events"></ul>
+      </div>
+    </aside>
+
+    <div class="stage">
+      <div id="view"></div>
+      <div class="fabric" id="fabric" hidden></div>
+      <div class="tip" id="tip" hidden></div>
+      <div class="viewbar" role="toolbar" aria-label="Camera">
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-space="hall" title="The physical twin: the 3D hall (H)">Hall</button>
+          <button type="button" data-space="fabric" title="The logical twin: the network fabric (N)">Fabric</button>
+        </div>
+        <div class="seg cam">
+          <button type="button" data-view="overview" title="Whole site (1)">Overview</button>
+          <button type="button" data-view="top" title="Plan view from above (2)">Top</button>
+          <button type="button" data-view="aisle" title="Eye level in the A/B cold aisle (3)">Cold aisle</button>
+        </div>
+        <div class="seg cam">
+          <button type="button" id="zoom-out" aria-label="Zoom out" title="Zoom out (−)">−</button>
+          <button type="button" id="zoom-in" aria-label="Zoom in" title="Zoom in (+)">+</button>
+          <button type="button" id="focus" disabled title="Fly to the selected object (F)">Zoom to selection</button>
+        </div>
+      </div>
+      <div class="viewopts">
+        <label class="switch"><span>Overhead services</span>
+          <input type="checkbox" id="overhead" checked><span class="track"></span></label>
+        <div class="seg" role="group" aria-label="Two-finger scroll">
+          <span class="hint">Scroll</span>
+          <button type="button" data-scroll="pan" title="Trackpad style: two fingers pan, pinch zooms">Pans</button>
+          <button type="button" data-scroll="zoom" title="Mouse style: the wheel zooms">Zooms</button>
+        </div>
+      </div>
+      <div class="stage-hint" id="stage-hint"></div>
+    </div>
+
+    <aside class="right" id="inspector"></aside>
+  </div>
+</div>
+
+<dialog id="usda-dialog">
+  <div class="dh"><span class="label" id="dialog-title">live/telemetry.usda</span><button class="btn" id="dialog-close" type="button">Close</button></div>
+  <pre id="dialog-body"></pre>
+</dialog>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

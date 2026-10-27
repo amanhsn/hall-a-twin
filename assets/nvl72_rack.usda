@@ -1,0 +1,913 @@
+#usda 1.0
+(
+    doc = """A GB200 NVL72-style rack. Rack front faces -Y. Units are metres, Z is up.
+
+    What to look for:
+      Looks           UsdPreviewSurface materials: colour, metallic, roughness, glow.
+      Parts           'class' prims: one compute tray, one switch tray, one power shelf.
+                      The Front stack references them 36 times (internal references),
+                      so a change to Parts/ComputeTray changes all 18 compute trays.
+      Shell           the side panels and roof. The twin tints these with live data.
+      cooling         a variant set that switches geometry AND data together."""
+    defaultPrim = "Rack"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "Rack" (
+    kind = "component"
+    variants = {
+        string cooling = "liquid"
+    }
+    prepend variantSets = "cooling"
+)
+{
+    # Data every rack has, whatever its cooling.
+    custom string facility:kind = "rack"
+    custom string facility:model = "GB200 NVL72"
+    custom int facility:gpuCount = 72
+    custom float facility:idlePowerKW = 30
+    # Scale-out network. The real rack has a NIC per GPU; the twin bundles them into
+    # 8 rails of 800 Gb/s to its row's leaf switch.
+    custom int facility:fabricLinks = 8
+    custom float facility:linkGbps = 800
+
+    def Scope "Looks"
+    {
+        # Powder-coated steel for the cabinet
+        def Material "Graphite"
+        {
+            token outputs:surface.connect = </Rack/Looks/Graphite/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.03, 0.033, 0.037)
+                float inputs:metallic = 0.35
+                float inputs:roughness = 0.42
+                token outputs:surface
+            }
+        }
+
+        def Material "Steel"
+        {
+            token outputs:surface.connect = </Rack/Looks/Steel/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.32, 0.33, 0.34)
+                float inputs:metallic = 0.9
+                float inputs:roughness = 0.32
+                token outputs:surface
+            }
+        }
+
+        def Material "TrayFace"
+        {
+            token outputs:surface.connect = </Rack/Looks/TrayFace/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.018, 0.02, 0.022)
+                float inputs:metallic = 0.4
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+
+        # Perforated air vents read as near-black
+        def Material "Vent"
+        {
+            token outputs:surface.connect = </Rack/Looks/Vent/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.006, 0.006, 0.007)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.85
+                token outputs:surface
+            }
+        }
+
+        # Tray handles and the badge
+        def Material "Champagne"
+        {
+            token outputs:surface.connect = </Rack/Looks/Champagne/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.62, 0.5, 0.3)
+                float inputs:metallic = 1
+                float inputs:roughness = 0.28
+                token outputs:surface
+            }
+        }
+
+        def Material "SwitchFace"
+        {
+            token outputs:surface.connect = </Rack/Looks/SwitchFace/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.16, 0.17, 0.18)
+                float inputs:metallic = 0.8
+                float inputs:roughness = 0.35
+                token outputs:surface
+            }
+        }
+
+        def Material "Ports"
+        {
+            token outputs:surface.connect = </Rack/Looks/Ports/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.04, 0.042, 0.045)
+                float inputs:metallic = 0.1
+                float inputs:roughness = 0.6
+                token outputs:surface
+            }
+        }
+
+        def Material "Copper"
+        {
+            token outputs:surface.connect = </Rack/Looks/Copper/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.75, 0.38, 0.2)
+                float inputs:metallic = 1
+                float inputs:roughness = 0.3
+                token outputs:surface
+            }
+        }
+
+        def Material "CoolantBlue"
+        {
+            token outputs:surface.connect = </Rack/Looks/CoolantBlue/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.02, 0.16, 0.6)
+                float inputs:metallic = 0.15
+                float inputs:roughness = 0.35
+                token outputs:surface
+            }
+        }
+
+        def Material "CoolantRed"
+        {
+            token outputs:surface.connect = </Rack/Looks/CoolantRed/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.62, 0.07, 0.03)
+                float inputs:metallic = 0.15
+                float inputs:roughness = 0.35
+                token outputs:surface
+            }
+        }
+
+        def Material "Rubber"
+        {
+            token outputs:surface.connect = </Rack/Looks/Rubber/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.008, 0.008, 0.008)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.9
+                token outputs:surface
+            }
+        }
+
+        # Emissive: the twin draws these as glowing lights
+        def Material "LedGreen"
+        {
+            token outputs:surface.connect = </Rack/Looks/LedGreen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0)
+                color3f inputs:emissiveColor = (0.3, 1, 0.12)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        def Material "LedBlue"
+        {
+            token outputs:surface.connect = </Rack/Looks/LedBlue/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0)
+                color3f inputs:emissiveColor = (0.15, 0.45, 1)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+    }
+
+    # Building blocks. 'class' prims are abstract: they aren't drawn themselves,
+    # they exist to be referenced. 1U is 44.5 mm.
+    def Scope "Parts"
+    {
+        class Xform "ComputeTray" (
+            doc = "One compute tray: 2 Grace CPUs and 4 Blackwell GPUs on cold plates"
+        )
+        {
+            def Cube "Face" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/TrayFace>
+                double size = 1
+                double3 xformOp:translate = (0, -0.585, 0)
+                float3 xformOp:scale = (0.5, 0.03, 0.0415)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Vent" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (-0.03, -0.6005, 0)
+                float3 xformOp:scale = (0.33, 0.003, 0.028)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "HandleL" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Champagne>
+                double size = 1
+                double3 xformOp:translate = (-0.232, -0.601, 0)
+                float3 xformOp:scale = (0.014, 0.004, 0.032)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "HandleR" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Champagne>
+                double size = 1
+                double3 xformOp:translate = (0.232, -0.601, 0)
+                float3 xformOp:scale = (0.014, 0.004, 0.032)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "StatusLed" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                doc = "The twin recolours StatusLed prims with the rack's live status"
+            )
+            {
+                rel material:binding = </Rack/Looks/LedGreen>
+                double size = 1
+                double3 xformOp:translate = (0.19, -0.6015, 0.007)
+                float3 xformOp:scale = (0.016, 0.003, 0.008)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        class Xform "SwitchTray" (
+            doc = "One NVLink switch tray: 2 NVLink switch chips"
+        )
+        {
+            def Cube "Face" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/SwitchFace>
+                double size = 1
+                double3 xformOp:translate = (0, -0.585, 0)
+                float3 xformOp:scale = (0.5, 0.03, 0.0415)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Ports" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Ports>
+                double size = 1
+                double3 xformOp:translate = (-0.02, -0.6005, -0.003)
+                float3 xformOp:scale = (0.38, 0.003, 0.02)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "LinkLed" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/LedBlue>
+                double size = 1
+                double3 xformOp:translate = (0.2, -0.6015, 0.008)
+                float3 xformOp:scale = (0.016, 0.003, 0.008)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        class Xform "PowerShelf" (
+            doc = "One power shelf: six 5.5 kW power supplies"
+        )
+        {
+            def Cube "Face" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/TrayFace>
+                double size = 1
+                double3 xformOp:translate = (0, -0.585, 0)
+                float3 xformOp:scale = (0.5, 0.03, 0.0415)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu1" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (-0.2, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu2" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (-0.12, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu3" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (-0.04, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu4" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (0.04, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu5" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (0.12, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "Psu6" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                double size = 1
+                double3 xformOp:translate = (0.2, -0.6005, 0)
+                float3 xformOp:scale = (0.07, 0.003, 0.034)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+    }
+
+    # Cabinet. Everything under Shell is tinted with live data in the twin.
+    def Xform "Shell"
+    {
+        def Cube "SideL" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Rack/Looks/Graphite>
+            double size = 1
+            double3 xformOp:translate = (-0.29, 0, 1.18)
+            float3 xformOp:scale = (0.02, 1.2, 2.24)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+        }
+        def Cube "SideR" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Rack/Looks/Graphite>
+            double size = 1
+            double3 xformOp:translate = (0.29, 0, 1.18)
+            float3 xformOp:scale = (0.02, 1.2, 2.24)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+        }
+        def Cube "Roof" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Rack/Looks/Graphite>
+            double size = 1
+            double3 xformOp:translate = (0, 0, 2.29)
+            float3 xformOp:scale = (0.6, 1.2, 0.02)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+        }
+    }
+
+    def Cube "Plinth" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Rack/Looks/Rubber>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 0.05)
+        float3 xformOp:scale = (0.6, 1.2, 0.1)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "RailL" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Rack/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (-0.262, -0.575, 1.18)
+        float3 xformOp:scale = (0.024, 0.03, 2.16)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "RailR" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Rack/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (0.262, -0.575, 1.18)
+        float3 xformOp:scale = (0.024, 0.03, 2.16)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Interior" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        doc = "Fills the cabinet so you can't see through it"
+    )
+    {
+        rel material:binding = </Rack/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0, -0.06, 1.18)
+        float3 xformOp:scale = (0.54, 1, 2.16)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Badge" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </Rack/Looks/Champagne>
+        double size = 1
+        double3 xformOp:translate = (0, -0.6005, 2.215)
+        float3 xformOp:scale = (0.14, 0.003, 0.022)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "BusBar" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        doc = "Rear DC busbar: the power shelves feed every tray through it"
+    )
+    {
+        rel material:binding = </Rack/Looks/Copper>
+        double size = 1
+        double3 xformOp:translate = (0, 0.5, 1.15)
+        float3 xformOp:scale = (0.05, 0.02, 2.05)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+
+    # The front of the rack, bottom to top: 4 power shelves, 8 compute trays,
+    # 9 NVLink switch trays, 10 compute trays, 4 power shelves, blanking, a management switch.
+    def Xform "Front"
+    {
+        def "Power_01" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.1323)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_02" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.1768)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_03" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.2213)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_04" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.2657)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_01" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.3102)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_02" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.3548)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_03" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.3992)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_04" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.4437)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_05" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.4882)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_06" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.5327)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_07" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.5773)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_08" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.6217)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_01" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.6663)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_02" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.7107)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_03" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.7552)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_04" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.7997)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_05" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.8442)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_06" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.8887)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_07" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.9332)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_08" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 0.9777)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Switch_09" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.0223)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_09" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.0668)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_10" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.1113)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_11" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.1558)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_12" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.2003)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_13" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.2448)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_14" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.2893)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_15" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.3337)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_16" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.3782)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_17" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.4227)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Compute_18" (
+            prepend references = </Rack/Parts/ComputeTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.4672)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_05" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.5117)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_06" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.5563)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_07" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.6008)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+        def "Power_08" (
+            prepend references = </Rack/Parts/PowerShelf>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 1.6453)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+
+        def Cube "Blanking" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            rel material:binding = </Rack/Looks/TrayFace>
+            double size = 1
+            double3 xformOp:translate = (0, -0.585, 1.9345)
+            float3 xformOp:scale = (0.5, 0.03, 0.531)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+        }
+        def "Mgmt_Switch" (
+            prepend references = </Rack/Parts/SwitchTray>
+        )
+        {
+            double3 xformOp:translate = (0, 0, 2.2237)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+
+    variantSet "cooling" =
+    {
+        "liquid"
+        {
+            # Direct-to-chip liquid cooling: cold plates on every GPU,
+            # coolant manifolds down the back, hoses up to the overhead headers.
+            custom token facility:cooling = "liquid"
+            custom float facility:maxPowerKW = 132
+            custom float facility:liquidFraction = 0.85
+
+            def Cube "SupplyManifold" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/CoolantBlue>
+                double size = 1
+                double3 xformOp:translate = (0.2, 0.48, 1.18)
+                float3 xformOp:scale = (0.05, 0.04, 2)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cube "ReturnManifold" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/CoolantRed>
+                double size = 1
+                double3 xformOp:translate = (-0.2, 0.54, 1.18)
+                float3 xformOp:scale = (0.05, 0.04, 2)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+            def Cylinder "SupplyHose" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                doc = "Rises to the supply header at 2.48 m"
+            )
+            {
+                rel material:binding = </Rack/Looks/CoolantBlue>
+                uniform token axis = "Z"
+                double height = 0.3
+                double radius = 0.02
+                double3 xformOp:translate = (0.2, 0.48, 2.33)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "ReturnHose" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+                doc = "Rises to the return header at 2.62 m"
+            )
+            {
+                rel material:binding = </Rack/Looks/CoolantRed>
+                uniform token axis = "Z"
+                double height = 0.44
+                double radius = 0.02
+                double3 xformOp:translate = (-0.2, 0.54, 2.4)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+        "air"
+        {
+            # Air cooling tops out around 40 kW per rack,
+            # which is why NVL72-class racks need liquid.
+            custom token facility:cooling = "air"
+            custom float facility:maxPowerKW = 40
+            custom float facility:liquidFraction = 0
+
+            # A variant can add children to prims defined outside it, like the Shell.
+            over "Shell"
+            {
+                def Cube "RearDoor" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    rel material:binding = </Rack/Looks/Graphite>
+                    double size = 1
+                    double3 xformOp:translate = (0, 0.595, 1.18)
+                    float3 xformOp:scale = (0.58, 0.01, 2.2)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+                }
+            }
+
+            def Cylinder "Fan1" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                uniform token axis = "Y"
+                double height = 0.015
+                double radius = 0.24
+                double3 xformOp:translate = (0, 0.607, 0.55)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "Hub1" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Steel>
+                uniform token axis = "Y"
+                double height = 0.012
+                double radius = 0.06
+                double3 xformOp:translate = (0, 0.612, 0.55)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "Fan2" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                uniform token axis = "Y"
+                double height = 0.015
+                double radius = 0.24
+                double3 xformOp:translate = (0, 0.607, 1.18)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "Hub2" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Steel>
+                uniform token axis = "Y"
+                double height = 0.012
+                double radius = 0.06
+                double3 xformOp:translate = (0, 0.612, 1.18)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "Fan3" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Vent>
+                uniform token axis = "Y"
+                double height = 0.015
+                double radius = 0.24
+                double3 xformOp:translate = (0, 0.607, 1.81)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+            def Cylinder "Hub3" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Rack/Looks/Steel>
+                uniform token axis = "Y"
+                double height = 0.012
+                double radius = 0.06
+                double3 xformOp:translate = (0, 0.612, 1.81)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+    }
+}

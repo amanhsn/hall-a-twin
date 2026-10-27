@@ -1,0 +1,717 @@
+#usda 1.0
+(
+    "Live network state from fabric.py, the stand-in for DSX Air. Its own layer, so it never collides with physics."
+)
+
+over "World"
+{
+    custom string facility:jobBottleneck = "none"
+    custom int facility:jobRacks = 80
+    custom float facility:jobSpeedPct = 100
+
+    over "GraySpace"
+    {
+        over "Network"
+        {
+            over "Spine_1"
+            {
+                custom int facility:linksTotal = 320
+                custom int facility:linksUp = 320
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 160182
+                custom float facility:utilPct = 62.6
+            }
+
+            over "Spine_2"
+            {
+                custom int facility:linksTotal = 320
+                custom int facility:linksUp = 320
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 160182
+                custom float facility:utilPct = 62.6
+            }
+        }
+    }
+
+    over "Hall"
+    {
+        over "Rows"
+        {
+            over "Row_A"
+            {
+                over "Rack_A01"
+                {
+                    custom int facility:fabricGbps = 3843
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A02"
+                {
+                    custom int facility:fabricGbps = 3783
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A03"
+                {
+                    custom int facility:fabricGbps = 3956
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A04"
+                {
+                    custom int facility:fabricGbps = 3528
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A05"
+                {
+                    custom int facility:fabricGbps = 3996
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A06"
+                {
+                    custom int facility:fabricGbps = 4132
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A07"
+                {
+                    custom int facility:fabricGbps = 3651
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A08"
+                {
+                    custom int facility:fabricGbps = 4069
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A09"
+                {
+                    custom int facility:fabricGbps = 3659
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_A10"
+                {
+                    custom int facility:fabricGbps = 3952
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_B"
+            {
+                over "Rack_B01"
+                {
+                    custom int facility:fabricGbps = 3689
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B02"
+                {
+                    custom int facility:fabricGbps = 3812
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B03"
+                {
+                    custom int facility:fabricGbps = 4045
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B04"
+                {
+                    custom int facility:fabricGbps = 4336
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B05"
+                {
+                    custom int facility:fabricGbps = 3925
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B06"
+                {
+                    custom int facility:fabricGbps = 3861
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B07"
+                {
+                    custom int facility:fabricGbps = 4113
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B08"
+                {
+                    custom int facility:fabricGbps = 4406
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B09"
+                {
+                    custom int facility:fabricGbps = 4034
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_B10"
+                {
+                    custom int facility:fabricGbps = 4008
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_C"
+            {
+                over "Rack_C01"
+                {
+                    custom int facility:fabricGbps = 4173
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C02"
+                {
+                    custom int facility:fabricGbps = 3630
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C03"
+                {
+                    custom int facility:fabricGbps = 4219
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C04"
+                {
+                    custom int facility:fabricGbps = 3760
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C05"
+                {
+                    custom int facility:fabricGbps = 3875
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C06"
+                {
+                    custom int facility:fabricGbps = 3713
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C07"
+                {
+                    custom int facility:fabricGbps = 3735
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C08"
+                {
+                    custom int facility:fabricGbps = 4200
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C09"
+                {
+                    custom int facility:fabricGbps = 3928
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_C10"
+                {
+                    custom int facility:fabricGbps = 4224
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_D"
+            {
+                over "Rack_D01"
+                {
+                    custom int facility:fabricGbps = 4203
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D02"
+                {
+                    custom int facility:fabricGbps = 3951
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D03"
+                {
+                    custom int facility:fabricGbps = 3911
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D04"
+                {
+                    custom int facility:fabricGbps = 3658
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D05"
+                {
+                    custom int facility:fabricGbps = 3798
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D06"
+                {
+                    custom int facility:fabricGbps = 3955
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D07"
+                {
+                    custom int facility:fabricGbps = 4191
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D08"
+                {
+                    custom int facility:fabricGbps = 4020
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D09"
+                {
+                    custom int facility:fabricGbps = 3831
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_D10"
+                {
+                    custom int facility:fabricGbps = 4232
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_E"
+            {
+                over "Rack_E01"
+                {
+                    custom int facility:fabricGbps = 3919
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E02"
+                {
+                    custom int facility:fabricGbps = 4041
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E03"
+                {
+                    custom int facility:fabricGbps = 4405
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E04"
+                {
+                    custom int facility:fabricGbps = 4213
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E05"
+                {
+                    custom int facility:fabricGbps = 3929
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E06"
+                {
+                    custom int facility:fabricGbps = 3893
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E07"
+                {
+                    custom int facility:fabricGbps = 4034
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E08"
+                {
+                    custom int facility:fabricGbps = 4343
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E09"
+                {
+                    custom int facility:fabricGbps = 4313
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_E10"
+                {
+                    custom int facility:fabricGbps = 3758
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_F"
+            {
+                over "Rack_F01"
+                {
+                    custom int facility:fabricGbps = 4214
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F02"
+                {
+                    custom int facility:fabricGbps = 3869
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F03"
+                {
+                    custom int facility:fabricGbps = 4071
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F04"
+                {
+                    custom int facility:fabricGbps = 3948
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F05"
+                {
+                    custom int facility:fabricGbps = 3835
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F06"
+                {
+                    custom int facility:fabricGbps = 3950
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F07"
+                {
+                    custom int facility:fabricGbps = 3889
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F08"
+                {
+                    custom int facility:fabricGbps = 4135
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F09"
+                {
+                    custom int facility:fabricGbps = 4139
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_F10"
+                {
+                    custom int facility:fabricGbps = 4145
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_G"
+            {
+                over "Rack_G01"
+                {
+                    custom int facility:fabricGbps = 4296
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G02"
+                {
+                    custom int facility:fabricGbps = 3950
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G03"
+                {
+                    custom int facility:fabricGbps = 4166
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G04"
+                {
+                    custom int facility:fabricGbps = 4018
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G05"
+                {
+                    custom int facility:fabricGbps = 4087
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G06"
+                {
+                    custom int facility:fabricGbps = 3848
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G07"
+                {
+                    custom int facility:fabricGbps = 4327
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G08"
+                {
+                    custom int facility:fabricGbps = 4297
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G09"
+                {
+                    custom int facility:fabricGbps = 3949
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_G10"
+                {
+                    custom int facility:fabricGbps = 4213
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+
+            over "Row_H"
+            {
+                over "Rack_H01"
+                {
+                    custom int facility:fabricGbps = 3806
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H02"
+                {
+                    custom int facility:fabricGbps = 3938
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H03"
+                {
+                    custom int facility:fabricGbps = 4115
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H04"
+                {
+                    custom int facility:fabricGbps = 4325
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H05"
+                {
+                    custom int facility:fabricGbps = 4223
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H06"
+                {
+                    custom int facility:fabricGbps = 3848
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H07"
+                {
+                    custom int facility:fabricGbps = 3991
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H08"
+                {
+                    custom int facility:fabricGbps = 4143
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H09"
+                {
+                    custom int facility:fabricGbps = 3614
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+
+                over "Rack_H10"
+                {
+                    custom int facility:fabricGbps = 4158
+                    custom bool facility:inJob = 1
+                    custom string facility:netStatus = "ok"
+                }
+            }
+        }
+
+        over "Network"
+        {
+            over "Leaf_A"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 38569
+                custom float facility:utilPct = 60.3
+            }
+
+            over "Leaf_B"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 40230
+                custom float facility:utilPct = 62.9
+            }
+
+            over "Leaf_C"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 39458
+                custom float facility:utilPct = 61.7
+            }
+
+            over "Leaf_D"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 39751
+                custom float facility:utilPct = 62.1
+            }
+
+            over "Leaf_E"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 40849
+                custom float facility:utilPct = 63.8
+            }
+
+            over "Leaf_F"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 40194
+                custom float facility:utilPct = 62.8
+            }
+
+            over "Leaf_G"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 41151
+                custom float facility:utilPct = 64.3
+            }
+
+            over "Leaf_H"
+            {
+                custom string facility:config = "QoS v1, MTU 9216"
+                custom int facility:linksTotal = 80
+                custom int facility:linksUp = 80
+                custom float facility:servedPct = 100
+                custom string facility:status = "ok"
+                custom int facility:trafficGbps = 40163
+                custom float facility:utilPct = 62.8
+            }
+        }
+    }
+}
+

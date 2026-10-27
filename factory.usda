@@ -1,0 +1,11 @@
+#usda 1.0
+(
+    "Root of the twin. Stronger layers come first."
+    defaultPrim = "World"
+    subLayers = [
+        @./live/network.usda@,
+        @./live/telemetry.usda@,
+        @./layout.usda@
+    ]
+)
+

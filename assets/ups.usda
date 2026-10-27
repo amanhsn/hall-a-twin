@@ -1,0 +1,216 @@
+#usda 1.0
+(
+    doc = """A UPS lineup: four cabinets of power electronics and batteries. Front faces -Y."""
+    defaultPrim = "UPS"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "UPS" (
+    kind = "component"
+)
+{
+    custom string facility:kind = "ups"
+
+    def Scope "Looks"
+    {
+        def Material "Paint"
+        {
+            token outputs:surface.connect = </UPS/Looks/Paint/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.2, 0.21, 0.22)
+                float inputs:metallic = 0.3
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+
+        def Material "Vent"
+        {
+            token outputs:surface.connect = </UPS/Looks/Vent/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.006, 0.006, 0.007)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.85
+                token outputs:surface
+            }
+        }
+
+        def Material "Steel"
+        {
+            token outputs:surface.connect = </UPS/Looks/Steel/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.32, 0.33, 0.34)
+                float inputs:metallic = 0.9
+                float inputs:roughness = 0.32
+                token outputs:surface
+            }
+        }
+
+        def Material "Screen"
+        {
+            token outputs:surface.connect = </UPS/Looks/Screen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0)
+                color3f inputs:emissiveColor = (0.25, 0.75, 0.35)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "Body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        doc = "Tinted with live data in the twin"
+    )
+    {
+        rel material:binding = </UPS/Looks/Paint>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 1)
+        float3 xformOp:scale = (2.4, 1, 1.95)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Plinth" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 0.025)
+        float3 xformOp:scale = (2.4, 1, 0.05)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Seam1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.6, -0.501, 1)
+        float3 xformOp:scale = (0.008, 0.003, 1.9)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Seam2" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0, -0.501, 1)
+        float3 xformOp:scale = (0.008, 0.003, 1.9)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Seam3" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0.6, -0.501, 1)
+        float3 xformOp:scale = (0.008, 0.003, 1.9)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Vent1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.9, -0.502, 0.35)
+        float3 xformOp:scale = (0.46, 0.003, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Handle1" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (-0.66, -0.508, 1.1)
+        float3 xformOp:scale = (0.015, 0.012, 0.18)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Vent2" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.3, -0.502, 0.35)
+        float3 xformOp:scale = (0.46, 0.003, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Handle2" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (-0.06, -0.508, 1.1)
+        float3 xformOp:scale = (0.015, 0.012, 0.18)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Vent3" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0.3, -0.502, 0.35)
+        float3 xformOp:scale = (0.46, 0.003, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Handle3" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (0.54, -0.508, 1.1)
+        float3 xformOp:scale = (0.015, 0.012, 0.18)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Vent4" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0.9, -0.502, 0.35)
+        float3 xformOp:scale = (0.46, 0.003, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Handle4" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (1.14, -0.508, 1.1)
+        float3 xformOp:scale = (0.015, 0.012, 0.18)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Screen" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </UPS/Looks/Screen>
+        double size = 1
+        double3 xformOp:translate = (-0.9, -0.502, 1.5)
+        float3 xformOp:scale = (0.26, 0.003, 0.16)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+}

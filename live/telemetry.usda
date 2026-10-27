@@ -1,0 +1,798 @@
+#usda 1.0
+(
+    "Live physics telemetry from sim.py. Written by server.py every second as overs on top of layout.usda."
+)
+
+over "World"
+{
+    custom float facility:itLoadKW = 7575.4
+    custom float facility:pue = 1.228
+    custom int facility:simSeconds = 125
+
+    over "Hall"
+    {
+        over "Rows"
+        {
+            over "Row_A"
+            {
+                over "Rack_A01"
+                {
+                    custom float facility:powerKW = 100
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_A02"
+                {
+                    custom float facility:powerKW = 98.9
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_A03"
+                {
+                    custom float facility:powerKW = 102.1
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_A04"
+                {
+                    custom float facility:powerKW = 94.3
+                    custom float facility:returnTempC = 40.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.63
+                }
+
+                over "Rack_A05"
+                {
+                    custom float facility:powerKW = 102.8
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_A06"
+                {
+                    custom float facility:powerKW = 105.3
+                    custom float facility:returnTempC = 41
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+
+                over "Rack_A07"
+                {
+                    custom float facility:powerKW = 96.5
+                    custom float facility:returnTempC = 40.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.65
+                }
+
+                over "Rack_A08"
+                {
+                    custom float facility:powerKW = 104.1
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.73
+                }
+
+                over "Rack_A09"
+                {
+                    custom float facility:powerKW = 96.6
+                    custom float facility:returnTempC = 40.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.65
+                }
+
+                over "Rack_A10"
+                {
+                    custom float facility:powerKW = 102
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+            }
+
+            over "Row_B"
+            {
+                over "Rack_B01"
+                {
+                    custom float facility:powerKW = 97.2
+                    custom float facility:returnTempC = 40.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.66
+                }
+
+                over "Rack_B02"
+                {
+                    custom float facility:powerKW = 99.4
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_B03"
+                {
+                    custom float facility:powerKW = 103.7
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_B04"
+                {
+                    custom float facility:powerKW = 109
+                    custom float facility:returnTempC = 41.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_B05"
+                {
+                    custom float facility:powerKW = 101.5
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_B06"
+                {
+                    custom float facility:powerKW = 100.3
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_B07"
+                {
+                    custom float facility:powerKW = 104.9
+                    custom float facility:returnTempC = 41
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.73
+                }
+
+                over "Rack_B08"
+                {
+                    custom float facility:powerKW = 110.3
+                    custom float facility:returnTempC = 41.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.79
+                }
+
+                over "Rack_B09"
+                {
+                    custom float facility:powerKW = 103.5
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_B10"
+                {
+                    custom float facility:powerKW = 103
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+            }
+
+            over "Row_C"
+            {
+                over "Rack_C01"
+                {
+                    custom float facility:powerKW = 106
+                    custom float facility:returnTempC = 41.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_C02"
+                {
+                    custom float facility:powerKW = 96.1
+                    custom float facility:returnTempC = 40.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.65
+                }
+
+                over "Rack_C03"
+                {
+                    custom float facility:powerKW = 106.8
+                    custom float facility:returnTempC = 41.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_C04"
+                {
+                    custom float facility:powerKW = 98.5
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.67
+                }
+
+                over "Rack_C05"
+                {
+                    custom float facility:powerKW = 100.6
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_C06"
+                {
+                    custom float facility:powerKW = 97.6
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.66
+                }
+
+                over "Rack_C07"
+                {
+                    custom float facility:powerKW = 98
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.67
+                }
+
+                over "Rack_C08"
+                {
+                    custom float facility:powerKW = 106.5
+                    custom float facility:returnTempC = 41.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_C09"
+                {
+                    custom float facility:powerKW = 101.5
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_C10"
+                {
+                    custom float facility:powerKW = 106.9
+                    custom float facility:returnTempC = 41.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+            }
+
+            over "Row_D"
+            {
+                over "Rack_D01"
+                {
+                    custom float facility:powerKW = 106.6
+                    custom float facility:returnTempC = 41.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_D02"
+                {
+                    custom float facility:powerKW = 102
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_D03"
+                {
+                    custom float facility:powerKW = 101.2
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_D04"
+                {
+                    custom float facility:powerKW = 96.6
+                    custom float facility:returnTempC = 40.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.65
+                }
+
+                over "Rack_D05"
+                {
+                    custom float facility:powerKW = 99.2
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_D06"
+                {
+                    custom float facility:powerKW = 102
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_D07"
+                {
+                    custom float facility:powerKW = 106.3
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_D08"
+                {
+                    custom float facility:powerKW = 103.2
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_D09"
+                {
+                    custom float facility:powerKW = 99.8
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_D10"
+                {
+                    custom float facility:powerKW = 107.1
+                    custom float facility:returnTempC = 41.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.76
+                }
+            }
+
+            over "Row_E"
+            {
+                over "Rack_E01"
+                {
+                    custom float facility:powerKW = 101.4
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_E02"
+                {
+                    custom float facility:powerKW = 103.6
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_E03"
+                {
+                    custom float facility:powerKW = 110.2
+                    custom float facility:returnTempC = 41.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.79
+                }
+
+                over "Rack_E04"
+                {
+                    custom float facility:powerKW = 106.7
+                    custom float facility:returnTempC = 41.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_E05"
+                {
+                    custom float facility:powerKW = 101.6
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_E06"
+                {
+                    custom float facility:powerKW = 100.9
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_E07"
+                {
+                    custom float facility:powerKW = 103.5
+                    custom float facility:returnTempC = 40.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_E08"
+                {
+                    custom float facility:powerKW = 109.1
+                    custom float facility:returnTempC = 41.3
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.78
+                }
+
+                over "Rack_E09"
+                {
+                    custom float facility:powerKW = 108.6
+                    custom float facility:returnTempC = 41.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_E10"
+                {
+                    custom float facility:powerKW = 98.5
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.67
+                }
+            }
+
+            over "Row_F"
+            {
+                over "Rack_F01"
+                {
+                    custom float facility:powerKW = 106.7
+                    custom float facility:returnTempC = 41.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_F02"
+                {
+                    custom float facility:powerKW = 100.5
+                    custom float facility:returnTempC = 40.7
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_F03"
+                {
+                    custom float facility:powerKW = 104.1
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.73
+                }
+
+                over "Rack_F04"
+                {
+                    custom float facility:powerKW = 101.9
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_F05"
+                {
+                    custom float facility:powerKW = 99.9
+                    custom float facility:returnTempC = 40.5
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_F06"
+                {
+                    custom float facility:powerKW = 102
+                    custom float facility:returnTempC = 40.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_F07"
+                {
+                    custom float facility:powerKW = 100.8
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_F08"
+                {
+                    custom float facility:powerKW = 105.3
+                    custom float facility:returnTempC = 41
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+
+                over "Rack_F09"
+                {
+                    custom float facility:powerKW = 105.4
+                    custom float facility:returnTempC = 41
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+
+                over "Rack_F10"
+                {
+                    custom float facility:powerKW = 105.5
+                    custom float facility:returnTempC = 41
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+            }
+
+            over "Row_G"
+            {
+                over "Rack_G01"
+                {
+                    custom float facility:powerKW = 108.2
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_G02"
+                {
+                    custom float facility:powerKW = 101.9
+                    custom float facility:returnTempC = 40
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_G03"
+                {
+                    custom float facility:powerKW = 105.9
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+
+                over "Rack_G04"
+                {
+                    custom float facility:powerKW = 103.2
+                    custom float facility:returnTempC = 40.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.72
+                }
+
+                over "Rack_G05"
+                {
+                    custom float facility:powerKW = 104.4
+                    custom float facility:returnTempC = 40.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.73
+                }
+
+                over "Rack_G06"
+                {
+                    custom float facility:powerKW = 100.1
+                    custom float facility:returnTempC = 39.9
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_G07"
+                {
+                    custom float facility:powerKW = 108.8
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_G08"
+                {
+                    custom float facility:powerKW = 108.3
+                    custom float facility:returnTempC = 40.6
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_G09"
+                {
+                    custom float facility:powerKW = 101.9
+                    custom float facility:returnTempC = 40
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_G10"
+                {
+                    custom float facility:powerKW = 106.7
+                    custom float facility:returnTempC = 40.4
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+            }
+
+            over "Row_H"
+            {
+                over "Rack_H01"
+                {
+                    custom float facility:powerKW = 36.8
+                    custom float facility:returnTempC = 36.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.68
+                }
+
+                over "Rack_H02"
+                {
+                    custom float facility:powerKW = 37
+                    custom float facility:returnTempC = 37
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.7
+                }
+
+                over "Rack_H03"
+                {
+                    custom float facility:powerKW = 37.3
+                    custom float facility:returnTempC = 37.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.73
+                }
+
+                over "Rack_H04"
+                {
+                    custom float facility:powerKW = 37.7
+                    custom float facility:returnTempC = 37.2
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.77
+                }
+
+                over "Rack_H05"
+                {
+                    custom float facility:powerKW = 37.5
+                    custom float facility:returnTempC = 37.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.75
+                }
+
+                over "Rack_H06"
+                {
+                    custom float facility:powerKW = 36.9
+                    custom float facility:returnTempC = 36.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.69
+                }
+
+                over "Rack_H07"
+                {
+                    custom float facility:powerKW = 37.1
+                    custom float facility:returnTempC = 37
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.71
+                }
+
+                over "Rack_H08"
+                {
+                    custom float facility:powerKW = 37.4
+                    custom float facility:returnTempC = 37.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+
+                over "Rack_H09"
+                {
+                    custom float facility:powerKW = 36.5
+                    custom float facility:returnTempC = 36.8
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.65
+                }
+
+                over "Rack_H10"
+                {
+                    custom float facility:powerKW = 37.4
+                    custom float facility:returnTempC = 37.1
+                    custom string facility:status = "ok"
+                    custom float facility:utilization = 0.74
+                }
+            }
+        }
+
+        over "Power"
+        {
+            over "Busway_A"
+            {
+                custom float facility:loadKW = 1002.5
+                custom bool facility:online = 1
+            }
+
+            over "Busway_B"
+            {
+                custom float facility:loadKW = 1032.8
+                custom bool facility:online = 1
+            }
+
+            over "Busway_C"
+            {
+                custom float facility:loadKW = 1018.7
+                custom bool facility:online = 1
+            }
+
+            over "Busway_D"
+            {
+                custom float facility:loadKW = 1024
+                custom bool facility:online = 1
+            }
+
+            over "Busway_E"
+            {
+                custom float facility:loadKW = 1044
+                custom bool facility:online = 1
+            }
+
+            over "Busway_F"
+            {
+                custom float facility:loadKW = 1032.1
+                custom bool facility:online = 1
+            }
+
+            over "Busway_G"
+            {
+                custom float facility:loadKW = 1049.5
+                custom bool facility:online = 1
+            }
+
+            over "Busway_H"
+            {
+                custom float facility:loadKW = 371.7
+                custom bool facility:online = 1
+            }
+        }
+
+        over "Cooling"
+        {
+            over "CDU_1"
+            {
+                custom float facility:heatLoadKW = 1730
+                custom float facility:loadPct = 72.1
+                custom bool facility:online = 1
+                custom float facility:supplyTempC = 31.4
+            }
+
+            over "CDU_2"
+            {
+                custom float facility:heatLoadKW = 1736.3
+                custom float facility:loadPct = 72.3
+                custom bool facility:online = 1
+                custom float facility:supplyTempC = 31.4
+            }
+
+            over "CDU_3"
+            {
+                custom float facility:heatLoadKW = 1764.7
+                custom float facility:loadPct = 73.5
+                custom bool facility:online = 1
+                custom float facility:supplyTempC = 31.5
+            }
+
+            over "CDU_4"
+            {
+                custom float facility:heatLoadKW = 892.1
+                custom float facility:loadPct = 37.2
+                custom bool facility:online = 1
+                custom float facility:supplyTempC = 30.7
+            }
+        }
+    }
+
+    over "GraySpace"
+    {
+        over "UPS_1"
+        {
+            custom float facility:loadKW = 4078
+            custom bool facility:online = 1
+        }
+
+        over "UPS_2"
+        {
+            custom float facility:loadKW = 3497.4
+            custom bool facility:online = 1
+        }
+    }
+
+    over "Plant"
+    {
+        over "Chiller_1"
+        {
+            custom float facility:loadKW = 3061.6
+            custom bool facility:online = 1
+        }
+
+        over "Chiller_2"
+        {
+            custom float facility:loadKW = 3061.6
+            custom bool facility:online = 1
+        }
+    }
+}
+

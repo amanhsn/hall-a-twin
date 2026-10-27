@@ -1,0 +1,287 @@
+#usda 1.0
+(
+    doc = """A coolant distribution unit (CDU).
+    It pumps coolant through the racks' cold plates and hands the heat
+    to the facility water loop, which carries it out to the chillers.
+    The service front faces -X. Rack coolant connects on top, facility water on the +X side."""
+    defaultPrim = "CDU"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "CDU" (
+    kind = "component"
+)
+{
+    custom string facility:kind = "cdu"
+    custom float facility:capacityKW = 2400
+    custom float facility:designSupplyC = 30
+
+    def Scope "Looks"
+    {
+        def Material "Paint"
+        {
+            token outputs:surface.connect = </CDU/Looks/Paint/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.12, 0.13)
+                float inputs:metallic = 0.3
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+
+        def Material "Steel"
+        {
+            token outputs:surface.connect = </CDU/Looks/Steel/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.32, 0.33, 0.34)
+                float inputs:metallic = 0.9
+                float inputs:roughness = 0.32
+                token outputs:surface
+            }
+        }
+
+        def Material "Vent"
+        {
+            token outputs:surface.connect = </CDU/Looks/Vent/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.006, 0.006, 0.007)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.85
+                token outputs:surface
+            }
+        }
+
+        def Material "Screen"
+        {
+            token outputs:surface.connect = </CDU/Looks/Screen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 0)
+                color3f inputs:emissiveColor = (0.12, 0.55, 0.65)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.5
+                token outputs:surface
+            }
+        }
+
+        def Material "CoolantBlue"
+        {
+            token outputs:surface.connect = </CDU/Looks/CoolantBlue/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.02, 0.16, 0.6)
+                float inputs:metallic = 0.15
+                float inputs:roughness = 0.35
+                token outputs:surface
+            }
+        }
+
+        def Material "CoolantRed"
+        {
+            token outputs:surface.connect = </CDU/Looks/CoolantRed/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.62, 0.07, 0.03)
+                float inputs:metallic = 0.15
+                float inputs:roughness = 0.35
+                token outputs:surface
+            }
+        }
+
+        def Material "FacilityGreen"
+        {
+            token outputs:surface.connect = </CDU/Looks/FacilityGreen/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.03, 0.3, 0.1)
+                float inputs:metallic = 0.2
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "FacilityGrey"
+        {
+            token outputs:surface.connect = </CDU/Looks/FacilityGrey/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.3, 0.31, 0.32)
+                float inputs:metallic = 0.5
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+    }
+
+    def Cube "Body" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        doc = "Tinted with live data in the twin"
+    )
+    {
+        rel material:binding = </CDU/Looks/Paint>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 1)
+        float3 xformOp:scale = (1.2, 0.9, 1.9)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Plinth" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (0, 0, 0.025)
+        float3 xformOp:scale = (1.2, 0.9, 0.05)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "DoorSeam" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.601, 0, 1)
+        float3 xformOp:scale = (0.003, 0.008, 1.8)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "Screen" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Screen>
+        double size = 1
+        double3 xformOp:translate = (-0.602, 0.22, 1.42)
+        float3 xformOp:scale = (0.003, 0.24, 0.15)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "VentLower" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.602, -0.22, 0.5)
+        float3 xformOp:scale = (0.003, 0.34, 0.6)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "VentUpper" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Vent>
+        double size = 1
+        double3 xformOp:translate = (-0.602, -0.22, 1.42)
+        float3 xformOp:scale = (0.003, 0.34, 0.5)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "HandleL" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (-0.606, -0.04, 1)
+        float3 xformOp:scale = (0.01, 0.02, 0.2)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+    def Cube "HandleR" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Steel>
+        double size = 1
+        double3 xformOp:translate = (-0.606, 0.04, 1)
+        float3 xformOp:scale = (0.01, 0.02, 0.2)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+    }
+
+    # Rack-side coolant: supply out to the racks, warm return back in.
+    def Cylinder "SupplyStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/CoolantBlue>
+        uniform token axis = "Z"
+        double height = 0.3
+        double radius = 0.05
+        double3 xformOp:translate = (-0.2, 0, 2.05)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "SupplyFlange" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.03
+        double radius = 0.075
+        double3 xformOp:translate = (-0.2, 0, 2.1)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "ReturnStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/CoolantRed>
+        uniform token axis = "Z"
+        double height = 0.3
+        double radius = 0.05
+        double3 xformOp:translate = (0.2, 0, 2.05)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "ReturnFlange" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/Steel>
+        uniform token axis = "Z"
+        double height = 0.03
+        double radius = 0.075
+        double3 xformOp:translate = (0.2, 0, 2.1)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    # Facility-side water: cold in from the chillers, warm back out.
+    def Cylinder "FacilitySupplyStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/FacilityGreen>
+        uniform token axis = "X"
+        double height = 0.1
+        double radius = 0.07
+        double3 xformOp:translate = (0.65, 0.2, 0.35)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+    def Cylinder "FacilityReturnStub" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        rel material:binding = </CDU/Looks/FacilityGrey>
+        uniform token axis = "X"
+        double height = 0.1
+        double radius = 0.07
+        double3 xformOp:translate = (0.65, -0.2, 0.75)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}
