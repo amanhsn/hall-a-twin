@@ -1,3 +1,13 @@
+---
+title: Hall A Twin
+emoji: 🏭
+colorFrom: green
+colorTo: gray
+sdk: docker
+app_port: 7860
+short_description: OpenUSD digital twin of an AI factory hall
+---
+
 # Hall A twin
 
 A small but real digital twin of an AI factory hall, built the way NVIDIA Omniverse twins are built:
