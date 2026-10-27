@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: hall-a-twin
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py --no-browser
+    healthCheckPath: /api/state
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: PYTHONUNBUFFERED
+        value: "1"

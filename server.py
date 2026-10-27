@@ -15,6 +15,7 @@ shares the stage between apps.
 """
 
 import json
+import os
 import sys
 import threading
 import time
@@ -31,7 +32,9 @@ from fabric import PROPOSAL, Fabric
 from sim import Sim
 
 HERE = Path(__file__).parent
-PORT = 8765
+# Hosts like Render set PORT and need the server to listen on all interfaces.
+PORT = int(os.environ.get("PORT", 8765))
+HOST = os.environ.get("HOST", "127.0.0.1")
 SAVE_EVERY = 5  # seconds between writes of the live layer to disk
 
 VALUE_TYPES = {float: Sdf.ValueTypeNames.Float, int: Sdf.ValueTypeNames.Int,
@@ -376,7 +379,7 @@ def main():
             time.sleep(max(0.0, 1.0 - (time.monotonic() - start)))
 
     threading.Thread(target=loop, daemon=True).start()
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), partial(Handler, directory=str(HERE / "web")))
+    server = ThreadingHTTPServer((HOST, PORT), partial(Handler, directory=str(HERE / "web")))
     url = f"http://localhost:{PORT}"
     print(f"AI factory twin running at {url}  (Ctrl+C to stop)")
     if "--no-browser" not in sys.argv:
