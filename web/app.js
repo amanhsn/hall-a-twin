@@ -14,7 +14,8 @@ const short = (p) => p.split("/").pop();
 const clock = (t) => `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
 const fmt = (v, d = 1) => (v == null || Number.isNaN(v) ? "–" : Number(v).toFixed(d));
 
-const api = {
+// On a static host (see static_build.py) there's no server.py, so static.js answers these in the browser.
+const api = window.TWIN_STATIC ? (await import("./static.js")).api : {
   get: (url) => fetch(url).then((r) => r.json()),
   control: (body) =>
     fetch("/api/control", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then((r) => r.json()),

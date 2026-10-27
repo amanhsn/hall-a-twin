@@ -5,6 +5,10 @@ leaf-spine network, all described in OpenUSD and simulated live in your browser.
 
 It runs on any Mac, Windows or Linux machine. You don't need a GPU or Omniverse.
 
+**Just want to look?** Open https://hall-a-twin.vercel.app. It's the same twin running entirely in your
+browser, with nothing to install. The steps below are for running it on your own machine, which you'll
+want if you're going to edit it or follow TEARDOWN.md.
+
 ## Option A: let Claude run it (easiest)
 
 1. Install [Claude Code](https://claude.com/claude-code) if you don't have it.
@@ -44,6 +48,20 @@ inside the unzipped folder.
 
 Work through the "Try this" list in the right-hand panel, then read `TEARDOWN.md`. It explains how
 the twin is built and how each part maps to NVIDIA Omniverse.
+
+## Publishing your own copy (free, no server)
+
+The hosted link is a static build: no Python server, so any free static host works.
+
+```
+.venv/bin/python static_build.py        # writes dist/
+npx vercel deploy dist --prod           # or drag dist/ onto Netlify, GitHub Pages, etc.
+```
+
+`static_build.py` opens the USD stage with the live layers muted and bakes the scene, the wiring and
+every prim's teardown into `dist/data/`. In the browser, `web/static.js` loads Pyodide (Python compiled
+to WebAssembly) and runs `static_twin.py`, which runs the same `sim.py` and `fabric.py` once a second.
+Each visitor gets their own simulation. Rebuild after any change to the assets or the sims.
 
 ## Troubleshooting
 
